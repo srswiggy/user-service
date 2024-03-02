@@ -1,17 +1,15 @@
-package com.swiggy.userservice.responses;
+package com.swiggy.userservice.requests;
 
-import com.swiggy.userservice.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse {
-    private long id;
+@Getter
+@Setter
+public class UserRequest {
     private String username;
-    private String role;
+    private String password;
 }

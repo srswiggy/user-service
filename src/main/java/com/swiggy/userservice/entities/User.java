@@ -19,6 +19,7 @@ public class User {
     @Column(unique = true)
     private String username;
     private String password;
-    @Enumerated(EnumType.STRING)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 }

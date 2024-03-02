@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,4 +35,12 @@ public class UserController {
         UserResponse userResponse = userService.create(userRequest, userType);
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{userid}")
+    @PreAuthorize("@userService.isUserOwner(#userDetails.username, #userId)")
+    public ResponseEntity<UserResponse> get(@PathVariable("userid") int userId, @AuthenticationPrincipal UserDetails userDetails) {
+        UserResponse userResponse = userService.get(userId);
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    }
+
 }

@@ -9,6 +9,7 @@ import com.swiggy.userservice.repositories.UserRepository;
 import com.swiggy.userservice.requests.UserRequest;
 import com.swiggy.userservice.responses.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,17 @@ public class UserService {
         user.setRole(role);
         User res = userRepo.save(user);
         return UserMapper.toUserResponse(res);
+    }
+
+    public UserResponse get(long userId) {
+        User user = userRepo.findById(userId).orElseThrow(()-> new UsernameNotFoundException(""));
+        return UserMapper.toUserResponse(user);
+    }
+
+    public Boolean isUserOwner(String username, long userid) {
+        System.out.println("Called");
+        User user = userRepo.findById(userid).orElseThrow(()->new UsernameNotFoundException("username not found"));
+
+        return user.getUsername().equals(username);
     }
 }

@@ -47,9 +47,13 @@ public class UserService {
     }
 
     public Boolean isUserOwner(String username, long userid) {
-        System.out.println("Called");
         User user = userRepo.findById(userid).orElseThrow(()->new UsernameNotFoundException("username not found"));
 
         return user.getUsername().equals(username);
+    }
+
+    public Boolean canAccessCatalogue(String username) {
+        User user = userRepo.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("username not found"));
+        return user.getRole().getName().equals("ADMIN");
     }
 }

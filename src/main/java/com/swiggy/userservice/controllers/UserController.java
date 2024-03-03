@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
@@ -43,4 +44,9 @@ public class UserController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/authorize")
+    @PreAuthorize("@userService.canAccessCatalogue(#userDetails.username)")
+    public ResponseEntity<String> authenticate(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
 }

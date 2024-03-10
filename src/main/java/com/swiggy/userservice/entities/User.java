@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DialectOverride;
 
 @Entity
 @Table(name = "users")
@@ -22,4 +23,6 @@ public class User {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
+    @Embedded
+    Location location;
 }

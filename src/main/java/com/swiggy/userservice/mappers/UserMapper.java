@@ -1,5 +1,6 @@
 package com.swiggy.userservice.mappers;
 
+import com.swiggy.userservice.entities.Location;
 import com.swiggy.userservice.entities.User;
 import com.swiggy.userservice.requests.UserRequest;
 import com.swiggy.userservice.responses.UserResponse;
@@ -10,10 +11,11 @@ import org.springframework.stereotype.Component;
 
 
 public class UserMapper {
-    public static User fromUserRequest(UserRequest request, String encodedPass) {
+    public static User fromUserRequest(UserRequest request, String encodedPass, Location location) {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(encodedPass);
+        user.setLocation(location);
         return user;
     }
 
@@ -22,6 +24,7 @@ public class UserMapper {
         userResponse.setUsername(user.getUsername());
         userResponse.setId(user.getId());
         userResponse.setRole(user.getRole().getName());
+        userResponse.setLocation(user.getLocation());
 
         return userResponse;
     }

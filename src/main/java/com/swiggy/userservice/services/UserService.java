@@ -34,7 +34,8 @@ public class UserService {
     }
 
     public UserResponse create(UserRequest userRequest, String type) throws Exception {
-        User user = UserMapper.fromUserRequest(userRequest, encoder.encode(userRequest.getPassword()));
+        System.out.println(userRequest.getLocation());
+        User user = UserMapper.fromUserRequest(userRequest, encoder.encode(userRequest.getPassword()), userRequest.getLocation());
         Role role = roleRepo.findByName(type.toUpperCase()).orElseThrow(NoSuchRoleException::new);
         user.setRole(role);
         User res = userRepo.save(user);
